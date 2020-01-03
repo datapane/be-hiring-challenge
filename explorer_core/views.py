@@ -80,3 +80,19 @@ class DatasetDetails(APIView):
             return JsonResponse({'message': 'Deleted'})
         except Exception as e:
             return JsonResponse({'message': str(e)}, status=400)
+
+class DatasetDescribe(APIView):
+
+    def get(self, request, id):
+        dataset_exists = Dataset.objects.get(id=id)
+        if dataset_exists:
+            file_path = self._get_file_path(id)
+            data_frame = pd.read_pickle(file_path)
+            describe_json = data_frame.describe().to_json()
+            return JsonResponse(describe_json, safe=False)
+        else:
+            return JsonResponse({'message': "Dataset doesn't exists"}, status=400)
+
+    def _get_file_path(self, id):
+        file_path = join(MEDIA_ROOT, f'{id}.pkl')
+        return file_path
