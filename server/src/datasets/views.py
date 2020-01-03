@@ -1,8 +1,12 @@
+from os.path import basename
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.decorators import action
 
 from datasets.models import Dataset
 from datasets.serializers import DatasetSerializer
+from datasets.utils import ExcelConverter
 
 
 class DatasetViewSet(viewsets.ModelViewSet):
@@ -15,7 +19,12 @@ class DatasetViewSet(viewsets.ModelViewSet):
 
     @action(methods=['get'], detail=True)
     def excel(self, request, pk=None, *args, **kwargs):
-        pass
+        obj = get_object_or_404(Dataset, pk=pk)
+        response = HttpResponse(content=ExcelConverter(obj.blob.path).convert(),
+                                content_type='application/ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="{}"'.format(
+            basename(obj.blob.name).replace(".csv", ".xlsx"))
+        return response
 
     @action(methods=['get'], detail=True)
     def plot(self, request, pk=None, *args, **kwargs):
