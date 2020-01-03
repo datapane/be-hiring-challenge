@@ -1,0 +1,4 @@
+*.pkl
+*.sqlite3
+__pycache__/
+*.csv
