@@ -57,3 +57,26 @@ class DatasetList(APIView):
         dataset_id = dataset.id
         file_path = join(MEDIA_ROOT, f'{dataset_id}.pkl')
         return file_path
+
+
+class DatasetDetails(APIView):
+
+    def get(self, request, id):
+        try:
+            dataset = Dataset.objects.get(id=id)
+            response = self._create_response(dataset)
+            return response
+        except Exception as e:
+            return JsonResponse({'message': str(e)}, status=400)
+
+    def _create_response(self, dataset: Dataset) -> JsonResponse:
+        resp = {'filename': dataset.filename, 'size': dataset.size}
+        return JsonResponse(resp)
+
+    def delete(self, request, id):
+        try:
+            dataset = Dataset.objects.get(id=id)
+            dataset.delete()
+            return JsonResponse({'message': 'Deleted'})
+        except Exception as e:
+            return JsonResponse({'message': str(e)}, status=400)
