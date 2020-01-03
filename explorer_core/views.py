@@ -29,14 +29,16 @@ class DatasetList(APIView):
             raise ParseError("Empty content")
 
         file_content = request.data['file']
-        dataset = self._create_dataset(file_content)
+        try:
+            dataset = self._create_dataset(file_content)
+        except Exception as e:
+            return JsonResponse({'message': str(e)}, status=400)
         try:
             dataset_id = self._write_pickled_file(file_content, dataset)
             return JsonResponse({'id': dataset_id})
         except Exception as e:
             dataset.delete()
-            return Http404(e)
-
+            return JsonResponse({'message': str(e)}, status=400)
 
     def _create_dataset(self, file_content: str) -> Dataset:
         dataset = Dataset()
@@ -50,7 +52,6 @@ class DatasetList(APIView):
         file_path = self._generate_file_path(dataset)
         data_frame.to_pickle(file_path)
         return dataset.id
-
 
     def _generate_file_path(self, dataset: Dataset) -> str:
         dataset_id = dataset.id
