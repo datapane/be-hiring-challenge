@@ -8,6 +8,9 @@ verify_ssl = true
 [packages]
 django = "==3.0.2"
 cement = "==3.0.4"
+jinja2 = "*"
+pyyaml = "*"
+colorlog = "*"
 
 [requires]
 python_version = "3.6"

@@ -1,12 +1,22 @@
-
 from cement import App, TestApp, init_defaults
 from cement.core.exc import CaughtSignal
-from .core.exc import DatapaneError
-from .controllers.base import Base
+from api.service import Service
+from controllers.datasets import DataSets
+from core.exc import DatapaneError
+from controllers.base import Base
 
 # configuration defaults
 CONFIG = init_defaults('datapane')
-CONFIG['datapane']['foo'] = 'bar'
+CONFIG['datapane']['host'] = '127.0.0.1'
+CONFIG['datapane']['port'] = '8000'
+
+
+def set_api_service(app):
+    host = app.config.get('datapane', 'host')
+    port = app.config.get('datapane', 'port')
+    app.log.info('Remote set to {}:{}'.format(host, port))
+
+    app.extend('apiservice', Service(host, port))
 
 
 class Datapane(App):
@@ -40,13 +50,19 @@ class Datapane(App):
         # set the output handler
         output_handler = 'jinja2'
 
+        # register hooks
+        hooks = [
+            ('post_setup', set_api_service),
+        ]
+
         # register handlers
         handlers = [
-            Base
+            Base,
+            DataSets,
         ]
 
 
-class DatapaneTest(TestApp,Datapane):
+class DatapaneTest(TestApp, Datapane):
     """A sub-class of Datapane that is better suited for testing."""
 
     class Meta:

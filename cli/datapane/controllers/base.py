@@ -1,7 +1,6 @@
-
 from cement import Controller, ex
 from cement.utils.version import get_version_banner
-from ..core.version import get_version
+from core.version import get_version
 
 VERSION_BANNER = """
 The quickest way to share datasets and results. %s
@@ -22,17 +21,15 @@ class Base(Controller):
         # controller level arguments. ex: 'datapane --version'
         arguments = [
             ### add a version banner
-            ( [ '-v', '--version' ],
-              { 'action'  : 'version',
-                'version' : VERSION_BANNER } ),
+            (['-v', '--version'],
+             {'action': 'version',
+              'version': VERSION_BANNER}),
         ]
-
 
     def _default(self):
         """Default action if no sub-command is passed."""
 
         self.app.args.print_help()
-
 
     @ex(
         help='example sub command1',
@@ -40,17 +37,17 @@ class Base(Controller):
         # sub-command level arguments. ex: 'datapane command1 --foo bar'
         arguments=[
             ### add a sample foo option under subcommand namespace
-            ( [ '-f', '--foo' ],
-              { 'help' : 'notorious foo option',
-                'action'  : 'store',
-                'dest' : 'foo' } ),
+            (['-f', '--foo'],
+             {'help': 'notorious foo option',
+              'action': 'store',
+              'dest': 'foo'}),
         ],
     )
     def command1(self):
         """Example sub-command."""
 
         data = {
-            'foo' : 'bar',
+            'foo': 'bar',
         }
 
         ### do something with arguments
