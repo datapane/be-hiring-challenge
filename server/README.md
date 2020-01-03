@@ -18,9 +18,9 @@ Procedure:
     ```
     cp .env.example .env
     ```
-- Use pipenv to install other dependencies from `Pipfile`
+- Use pipenv to install other dependencies from `Pipfile`, add `--skip-lock` if locking is slow
     ```
-    pipenv install --dev
+    pipenv install --dev --skip-lock
     ```
 - Change to `server/src` directory and optionally activate virtual environment, if you don't want to activate env, use `pipenv run` to run python scripts
     ```
