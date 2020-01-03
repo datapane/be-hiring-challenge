@@ -7,7 +7,7 @@ from rest_framework.response import Response
 import pandas as pd
 from datasets.models import Dataset
 from datasets.serializers import DatasetSerializer
-from datasets.utils import ExcelConverter
+from datasets.utils import ExcelConverter, PlotToPDF
 
 
 class DatasetViewSet(viewsets.ModelViewSet):
@@ -31,4 +31,9 @@ class DatasetViewSet(viewsets.ModelViewSet):
 
     @action(methods=['get'], detail=True)
     def plot(self, request, pk=None, *args, **kwargs):
-        pass
+        obj = get_object_or_404(Dataset, pk=pk)
+        response = HttpResponse(content=PlotToPDF(obj.blob.path).pdf(),
+                                content_type='application/pdf')
+        response['Content-Disposition'] = 'attachment; filename="{}"'.format(
+            basename(obj.blob.name).replace(".csv", ".pdf"))
+        return response

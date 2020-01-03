@@ -16,6 +16,7 @@ djangorestframework = "==3.11.0"
 pandas = "==0.25.3"
 xlsxwriter = "==1.2.7"
 django-cleanup = "==4.0.0"
+matplotlib = "*"
 
 [requires]
 python_version = "3.6"
