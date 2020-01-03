@@ -8,6 +8,9 @@ class ExcelConverter:
         self.df = pd.read_csv(path)
         self.writer = pd.ExcelWriter(self.buf, engine='xlsxwriter')
 
+    def __del__(self):
+        self.buf.close()
+
     def convert(self):
         self.df.to_excel(self.writer, sheet_name='Sheet1')
         self.writer.save()
@@ -19,6 +22,9 @@ class PlotToPDF:
     def __init__(self, path):
         self.buf = BytesIO()
         self.df = pd.read_csv(path)
+
+    def __del__(self):
+        self.buf.close()
 
     def pdf(self):
         plot = self.df.hist()
