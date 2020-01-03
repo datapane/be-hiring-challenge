@@ -6,9 +6,9 @@ Requirements:
 
 Procedure:
 - Install [python](https://www.python.org/downloads/) in your environment.
-- Navigate to the cloned repository.
+- Navigate to the `server` directory in the cloned repository.
     ```
-    cd <project_directory_name>     # be-hiring-challenge
+    cd <project_directory_name>     # be-hiring-challenge/server
     ```
 - Install `pipenv` for dependency management
     ```
@@ -22,9 +22,9 @@ Procedure:
     ```
     pipenv install --dev --skip-lock
     ```
-- Change to `server/src` directory and optionally activate virtual environment, if you don't want to activate env, use `pipenv run` to run python scripts
+- Change to `src` directory and optionally activate virtual environment, if you don't want to activate env, use `pipenv run` to run python scripts
     ```
-    cd server/src
+    cd src
     source "$(pipenv --venv)"/bin/activate
     ```
 - Make database migrations
