@@ -134,4 +134,5 @@ dmypy.json
 # Django
 **/migrations/*
 **/media/*
+!**/media/.keep
 !**/migrations/__init__.py
