@@ -9,7 +9,7 @@ This challenge involves building a small API server and corresponding command-li
 
 # Task
 
-For this task we'll be building a very simple Python 3-based REST API server and command-line client. 
+For this task we'll be building a very simple Python 3-based REST API server and command-line client.
 
 You may use any Python libraries and technologies of your choice, for instance Django, Flask, Starlette, etc, to build the API server (internally we use Django/DRF so recommend that).
 
@@ -52,3 +52,39 @@ Please don't spend more than 2-4 hours on this - we're looking to see how you ap
 There is no right answer as such, we will mainly be looking at code quality, software architecture skills, completeness of the solution from a software engineering perspective, and clarity of thought.
 
 Once completed, please create a PR containing your work, send us an email, and book a second follow-up interview via angellist (https://angel.co/schedule/mandeep-gill-2).
+
+## Setup
+
+```bash
+git clone https://github.com/sayantan-backup/be-hiring-challenge.git
+```
+
+### Virtual environment
+
+```bash
+python3 -m venv <environment>
+source <environment>/bin/activate
+```
+
+### Server
+
+```bash
+cd be-hiring-challenge
+python3 django-server/manage.py makemigrations
+python3 django-server/manage.py migrate
+python3 django-server/manage.py runserver
+```
+
+### CLI
+
+```bash
+pip install -e cli
+```
+
+ - `GET /datasets/` - `datapane-cli ls`
+ - `POST /datasets/` - `datapane-cli import --file(-f) <file_path> --title(-t) <title>`
+ - `GET /datasets/<id>/` - `datapane-cli export --id <id>`
+ - `DELETE /datasets/<id>/` - `datapane-cli delete --id <id>`
+ - `GET /datasets/<id>/excel/` - `datapane-cli export --id <id> --action(-a) excel`
+ - `GET /datasets/<id>/stats/` - `datapane-cli export --id <id> --action(-a) stats`
+ - `GET /datasets/<id>/plot/` - `datapane-cli export --id <id> --action(-a) plot`
