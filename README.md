@@ -59,20 +59,23 @@ Once completed, please create a PR containing your work, send us an email, and b
 git clone https://github.com/sayantan-backup/be-hiring-challenge.git
 ```
 
-### Virtual environment
+### Install Dependencies
 
-```bash
-python3 -m venv <environment>
-source <environment>/bin/activate
-```
+- **For pip:**
+  ```bash
+    python3 -m virtualenv <environment name>
+    source <environment name>/bin/activate
+    pip install -r requirements.txt
+  ```
 
 ### Server
 
 ```bash
-cd be-hiring-challenge
-python3 django-server/manage.py makemigrations
-python3 django-server/manage.py migrate
-python3 django-server/manage.py runserver
+    cd be-hiring-challenge
+
+    python3 django-server/manage.py makemigrations
+    python3 django-server/manage.py migrate
+    python3 django-server/manage.py runserver
 ```
 
 ### CLI
