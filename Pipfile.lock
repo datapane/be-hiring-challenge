@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "5336d1f64f97d25eb13982cab8a2cc4668c90626c7fbe12d17251e94d70a0f31"
+            "sha256": "c694167f29bc5b6c72aa53d670cc3a00be6502ca6e62c0bbbd460d1d44c2d39e"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -46,6 +46,29 @@
             ],
             "index": "pypi",
             "version": "==3.0.2"
+        },
+        "django-cleanup": {
+            "hashes": [
+                "sha256:412c3f9417ddaaaa561b60237b109550b16e556db92d4616278fc7e1ad9ab0a4",
+                "sha256:b2bdb590eccc1a8e0688d5c6224080d3bb4a77e5bad1688fbe452d8c3454d755"
+            ],
+            "index": "pypi",
+            "version": "==4.0.0"
+        },
+        "django-decouple": {
+            "hashes": [
+                "sha256:a7f4b4d1eaedde3a7d1a8e0489dae4afa96cff3eb575d569d92d9ba5f4283f90"
+            ],
+            "index": "pypi",
+            "version": "==2.1"
+        },
+        "djangorestframework": {
+            "hashes": [
+                "sha256:05809fc66e1c997fd9a32ea5730d9f4ba28b109b9da71fccfa5ff241201fd0a4",
+                "sha256:e782087823c47a26826ee5b6fa0c542968219263fb3976ec3c31edab23a4001f"
+            ],
+            "index": "pypi",
+            "version": "==3.11.0"
         },
         "jinja2": {
             "hashes": [
