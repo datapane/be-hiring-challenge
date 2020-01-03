@@ -71,6 +71,10 @@ class DatapaneTest(TestApp, Datapane):
 
 def main():
     with Datapane() as app:
+        app.args.add_argument('-i', '--id',
+                              help='id of the dataset',
+                              action='store',
+                              dest='id')
         try:
             app.run()
 
