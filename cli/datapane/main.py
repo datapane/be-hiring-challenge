@@ -1,9 +1,9 @@
 from cement import App, TestApp, init_defaults
 from cement.core.exc import CaughtSignal
-from api.service import Service
-from controllers.datasets import DataSets
-from core.exc import DatapaneError
-from controllers.base import Base
+from .api.service import Service
+from .controllers.datasets import DataSets
+from .core.exc import DatapaneError
+from .controllers.base import Base
 
 # configuration defaults
 CONFIG = init_defaults('datapane')

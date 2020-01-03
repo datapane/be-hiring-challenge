@@ -6,5 +6,5 @@ WORKDIR /src
 COPY . /src
 RUN pip install --no-cache-dir -r requirements.txt \
     && python setup.py install
-WORKDIR /
+WORKDIR /app
 ENTRYPOINT ["datapane"]
