@@ -21,6 +21,7 @@ urlpatterns = [
     path('api/', include('datasets.urls')),
 ]
 
-if settings.DEBUG:  # pragma: no cover
+if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    # /media/ should not be exposed in production environment
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

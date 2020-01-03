@@ -2,33 +2,38 @@ import pandas as pd
 from io import BytesIO
 
 
-class ExcelConverter:
+class PandasInMemoryMixin:
+    buf, df = None, None
+
     def __init__(self, path):
         self.buf = BytesIO()
         self.df = pd.read_csv(path)
-        self.writer = pd.ExcelWriter(self.buf, engine='xlsxwriter')
 
     def __del__(self):
         self.buf.close()
 
-    def convert(self):
-        self.df.to_excel(self.writer, sheet_name='Sheet1')
-        self.writer.save()
+    def read_buf(self):
         self.buf.seek(0)
         return self.buf.read()
 
 
-class PlotToPDF:
+class ExcelConverter(PandasInMemoryMixin):
     def __init__(self, path):
-        self.buf = BytesIO()
-        self.df = pd.read_csv(path)
+        super().__init__(path)
 
-    def __del__(self):
-        self.buf.close()
+    def convert(self):
+        writer = pd.ExcelWriter(self.buf, engine='xlsxwriter')
+        self.df.to_excel(writer, sheet_name='Sheet1')
+        writer.save()
+        return self.read_buf()
+
+
+class PlotToPDF(PandasInMemoryMixin):
+    def __init__(self, path):
+        super().__init__(path)
 
     def pdf(self):
         plot = self.df.hist()
         fig = plot[0][0].get_figure()
         fig.savefig(self.buf, format='pdf')
-        self.buf.seek(0)
-        return self.buf.read()
+        return self.read_buf()
