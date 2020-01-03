@@ -20,4 +20,7 @@ from . import views
 urlpatterns = [
     path('',  views.DatasetListCreateAPIView.as_view()),
     path('<int:id>/',  views.DatasetRetrieveDestroyAPIView.as_view()),
+    path('<int:id>/excel/',  views.DatasetRetrieveExcelAPIView.as_view()),
+    path('<int:id>/stats/',  views.DatasetRetrieveStatsAPIView.as_view()),
+    path('<int:id>/plot/',  views.DatasetRetrievePlotAPIView.as_view()),
 ]
