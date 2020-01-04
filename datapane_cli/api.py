@@ -8,7 +8,7 @@ import requests
 
 class DatapaneApi:
     def __init__(self):
-        self.api = 'http://localhost:8000'
+        self.api = 'http://0.0.0.0:8000'
 
     def get_all_datasets(self):
         url = f'{self.api}/datasets/'
