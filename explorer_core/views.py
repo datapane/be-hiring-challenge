@@ -1,8 +1,10 @@
 import os
+from io import BytesIO
 from os.path import join
 from typing import Optional
 
-from django.http import JsonResponse, Http404
+import numpy as np
+from django.http import JsonResponse, HttpResponse
 
 # Create your views here.
 from rest_framework import renderers
@@ -14,10 +16,14 @@ from explorer_core.models import Dataset
 from explorer_core.serializers import DatasetSerializer
 import pandas as pd
 
-from explorer_core.utils import get_file_path
+from explorer_core.utils import get_file_path, dataset_exists, get_dataframe, get_filename, get_pdf_filename
 
 
 class DatasetList(APIView):
+    """
+        This class helps to get details of all the datasets available
+        and also to create a dataset in the database
+    """
     parser_class = (FileUploadParser,)
     renderer_classes = [renderers.JSONOpenAPIRenderer]
 
@@ -57,6 +63,9 @@ class DatasetList(APIView):
 
 
 class DatasetDetails(APIView):
+    """
+        This class helps in getting the details of the datasets.
+    """
 
     def get(self, request, id):
         try:
@@ -87,11 +96,71 @@ class DatasetDetails(APIView):
 class DatasetDescribe(APIView):
 
     def get(self, request, id):
-        dataset_exists = Dataset.objects.get(id=id)
-        if dataset_exists:
-            file_path = get_file_path(id)
-            data_frame = pd.read_pickle(file_path)
+        if dataset_exists(id):
+            data_frame = get_dataframe(id)
             describe_json = data_frame.describe().to_json()
             return JsonResponse(describe_json, safe=False)
         else:
             return JsonResponse({'message': "Dataset doesn't exists"}, status=400)
+
+
+class DatasetExcelExporter(APIView):
+
+    def get(self, request, id):
+        if dataset_exists(id):
+            data_frame = get_dataframe(id)
+            data = self._get_excel_data(data_frame)
+            filename = get_filename(id)
+            response = self._generate_excel_response(data, filename)
+            return response
+        else:
+            return JsonResponse({'message': "Dataset doesn't exists"}, status=400)
+
+    def _get_excel_data(self, data_frame):
+        in_memory_fp = BytesIO()
+        data_frame.to_excel(in_memory_fp)
+        in_memory_fp.seek(0, 0)
+        data = in_memory_fp.read()
+        return data
+
+    def _generate_excel_response(self, data: bytes, filename: str) -> HttpResponse:
+        response = HttpResponse(data, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = f'attachment; filename={filename}.xlsx'
+        return response
+
+
+class DatasetPdfExporter(APIView):
+
+    def get(self, request, id):
+        if dataset_exists(id):
+            data_frame = get_dataframe(id)
+            filename = get_filename(id)
+            data = self._get_pdf_data(data_frame, filename)
+            response = self._generate_pdf_response(data, filename)
+            return response
+        else:
+            return JsonResponse({'message': "Dataset doesn't exists"}, status=400)
+
+    def _get_pdf_data(self, data_frame: pd.DataFrame, filename: str) -> bytes:
+        df_numerics_only = data_frame.select_dtypes(include=np.number)
+        file_path = get_pdf_filename(filename)
+        self._generate_pdf(df_numerics_only, file_path)
+        with open(file_path, 'rb') as pdf:
+            data = pdf.read()
+        os.remove(file_path)
+        return data
+
+    def _generate_pdf(self, df_numerics_only: pd.DataFrame, file_path: str) -> None:
+        import matplotlib
+        matplotlib.use('Agg')
+        import matplotlib.pyplot as plt
+        from matplotlib.backends.backend_pdf import PdfPages
+        with PdfPages(file_path) as pdf:
+            df_numerics_only.hist()
+            pdf.savefig()
+            plt.close()
+
+    def _generate_pdf_response(self, data: bytes, filename: str) -> HttpResponse:
+        response = HttpResponse(data, content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment;filename={filename}.pdf'
+        return response
