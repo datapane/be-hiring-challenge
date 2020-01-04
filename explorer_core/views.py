@@ -1,3 +1,4 @@
+import os
 from os.path import join
 from typing import Optional
 
@@ -9,10 +10,11 @@ from rest_framework.exceptions import ParseError
 from rest_framework.parsers import FileUploadParser
 from rest_framework.views import APIView
 
-from explorer.settings import MEDIA_ROOT
 from explorer_core.models import Dataset
 from explorer_core.serializers import DatasetSerializer
 import pandas as pd
+
+from explorer_core.utils import get_file_path
 
 
 class DatasetList(APIView):
@@ -49,14 +51,9 @@ class DatasetList(APIView):
 
     def _write_pickled_file(self, file_content: str, dataset: Dataset) -> int:
         data_frame = pd.read_csv(file_content)
-        file_path = self._generate_file_path(dataset)
+        file_path = get_file_path(dataset.id)
         data_frame.to_pickle(file_path)
         return dataset.id
-
-    def _generate_file_path(self, dataset: Dataset) -> str:
-        dataset_id = dataset.id
-        file_path = join(MEDIA_ROOT, f'{dataset_id}.pkl')
-        return file_path
 
 
 class DatasetDetails(APIView):
@@ -77,22 +74,24 @@ class DatasetDetails(APIView):
         try:
             dataset = Dataset.objects.get(id=id)
             dataset.delete()
+            self._delete_pickle(id)
             return JsonResponse({'message': 'Deleted'})
         except Exception as e:
             return JsonResponse({'message': str(e)}, status=400)
+
+    def _delete_pickle(self, id):
+        file_path = get_file_path(id)
+        os.remove(file_path)
+
 
 class DatasetDescribe(APIView):
 
     def get(self, request, id):
         dataset_exists = Dataset.objects.get(id=id)
         if dataset_exists:
-            file_path = self._get_file_path(id)
+            file_path = get_file_path(id)
             data_frame = pd.read_pickle(file_path)
             describe_json = data_frame.describe().to_json()
             return JsonResponse(describe_json, safe=False)
         else:
             return JsonResponse({'message': "Dataset doesn't exists"}, status=400)
-
-    def _get_file_path(self, id):
-        file_path = join(MEDIA_ROOT, f'{id}.pkl')
-        return file_path
