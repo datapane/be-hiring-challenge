@@ -145,8 +145,7 @@ class DatasetPdfExporter(APIView):
         df_numerics_only = data_frame.select_dtypes(include=np.number)
         file_path = get_pdf_filename(filename)
         self._generate_pdf(df_numerics_only, file_path)
-        with open(file_path, 'rb') as pdf:
-            data = pdf.read()
+        data = self._get_data(file_path)
         os.remove(file_path)
         return data
 
@@ -159,6 +158,11 @@ class DatasetPdfExporter(APIView):
             df_numerics_only.hist()
             pdf.savefig()
             plt.close()
+
+    def _get_data(self, file_path: str) -> bytes:
+        with open(file_path, 'rb') as pdf:
+            data = pdf.read()
+        return data
 
     def _generate_pdf_response(self, data: bytes, filename: str) -> HttpResponse:
         response = HttpResponse(data, content_type='application/pdf')
