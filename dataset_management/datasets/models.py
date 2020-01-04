@@ -21,6 +21,7 @@ class Dataset(models.Model):
 
     @property
     def size(self):
+        """Returns the number of elements in the dataframe"""
         return self.dataframe.size
 
     def to_excel(self):
