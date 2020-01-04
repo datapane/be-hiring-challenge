@@ -1,0 +1,17 @@
+asgiref==3.2.3
+cycler==0.10.0
+Django==3.0.2
+djangorestframework==3.11.0
+djangorestframework-stubs==1.1.0
+et-xmlfile==1.0.1
+jdcal==1.4.1
+kiwisolver==1.1.0
+matplotlib==3.1.2
+numpy==1.18.0
+openpyxl==3.0.2
+pandas==0.25.3
+pyparsing==2.4.6
+python-dateutil==2.8.1
+pytz==2019.3
+six==1.13.0
+sqlparse==0.3.0
