@@ -6,7 +6,6 @@ setup(
     py_modules=['datapane-cli'],
     install_requires=[
         'click',
-        'pandas',
         'requests'
     ],
     entry_points="""

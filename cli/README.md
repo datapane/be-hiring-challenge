@@ -7,7 +7,6 @@ Simple command line client developed in [click](https://pypi.org/project/click/)
 
 - [click](https://pypi.org/project/click/)
 - [requests](https://pypi.org/project/requests/)
-- [pandas](https://pypi.org/project/pandas/)
 
 ## Installation
 
