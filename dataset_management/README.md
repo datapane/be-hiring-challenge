@@ -32,9 +32,11 @@ Clone GitHub Project,
 ```bash
 git clone https://github.com/saadmk11/be-hiring-challenge.git
 
+cd be-hiring-challenge
+
 git checkout challenge
 
-cd be-hiring-challenge/dataset_management
+cd dataset_management
 ```
 
 Install development dependencies,

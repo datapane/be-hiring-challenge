@@ -12,6 +12,15 @@ Be sure you have the following installed on your development machine:
 + requests==2.22.0
 
 
+Clone GitHub Project,
+```bash
+git clone https://github.com/saadmk11/be-hiring-challenge.git
+
+cd be-hiring-challenge
+
+git checkout challenge
+```
+
 ## Install Dataset-cli:
 
 ```bash
