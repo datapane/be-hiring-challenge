@@ -55,28 +55,23 @@ Once completed, please create a PR containing your work, send us an email, and b
 
 ## Setup
 
+### Pull source code
+
 ```bash
 git clone https://github.com/sayantan-backup/be-hiring-challenge.git
 ```
 
-### Install Dependencies
+### Install sandbox dependencies
 
-- **For pip:**
+- [docker](https://docs.docker.com/)
+- [docker-compose](https://docs.docker.com/compose/)
+
+### Build docker sandbox
+
   ```bash
-    python3 -m virtualenv <environment name>
-    source <environment name>/bin/activate
-    pip install -r requirements.txt
+    docker-compose build
+    docker-compose up
   ```
-
-### Server
-
-```bash
-    cd be-hiring-challenge
-
-    python3 django-server/manage.py makemigrations
-    python3 django-server/manage.py migrate
-    python3 django-server/manage.py runserver
-```
 
 ### CLI
 

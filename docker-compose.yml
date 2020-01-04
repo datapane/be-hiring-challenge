@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  django-server:
+    build: .
+    command: >
+      sh -c "python django-server/manage.py makemigrations
+      && python django-server/manage.py migrate
+      && python django-server/manage.py runserver 0.0.0.0:8000"
+    container_name: datapane
+    volumes:
+      - .:/datapane
+    ports:
+      - "8000:8000"
