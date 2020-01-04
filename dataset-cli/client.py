@@ -2,6 +2,8 @@ import requests
 
 
 class DatasetClient:
+    """A Client to Communicate with the Dataset API"""
+
     def __init__(self, host, port):
         self.base_url = f'http://{host}:{port}/datasets/'
 

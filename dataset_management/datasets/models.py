@@ -24,6 +24,7 @@ class Dataset(models.Model):
         return self.dataframe.size
 
     def to_excel(self):
+        """Convert Pandas Dataframe to Excel File"""
         excel_file = BytesIO()
         xlwriter = pd.ExcelWriter(
             excel_file,
@@ -39,6 +40,7 @@ class Dataset(models.Model):
         return excel_file.read()
 
     def to_pdf(self):
+        """Convert Pandas Dataframe histogram to PDF File"""
         pdf_file = BytesIO()
         self.dataframe.hist(bins=8)
         plt.savefig(pdf_file, format='pdf')
