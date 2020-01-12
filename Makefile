@@ -15,7 +15,6 @@ check-style: ## Run multiple linters against all modules
 	@echo success
 
 install-cli: ## Install dataset-cli to interact with server
-	pip install -r cli/requirements.txt
 	pip install --editable cli/.
 
 run: start-server install-cli
