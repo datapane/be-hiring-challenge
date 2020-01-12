@@ -9,8 +9,8 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /dataset-server
 
 # Copy the current directory contents into the container at /app
-COPY server/api server/
-COPY server/server server/
+COPY server/api server/api
+COPY server/server server/server
 COPY server/manage.py server/
 COPY server/requirements.txt /dataset-server
 
