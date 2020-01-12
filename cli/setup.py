@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="dataset-cli",
-    version='0.1',
+    version='1.0',
     py_modules=['cli'],
     install_requires=[
         'Click',

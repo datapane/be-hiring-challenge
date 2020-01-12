@@ -31,10 +31,12 @@ class RESTClient:
         response = requests.delete(url)
         return response
 
+
 class DatasetClient(RESTClient):
 
     ENDPOINT = 'datasets'
 
+    # pylint: disable=arguments-differ
     def create(self, csv_file):
         csv_data = open(csv_file, 'rb')
         file = {'csv_data': csv_data}

@@ -4,6 +4,7 @@ from rest_client import DatasetClient
 
 client = DatasetClient()
 
+
 @click.group()
 def cli():
     pass
@@ -14,17 +15,20 @@ def get_all():
     response = client.get_all()
     click.echo(response)
 
+
 @cli.command('create')
 @click.option('-f', '--file', required=True, help='Path for CSV file')
 def create(file):
     response = client.create(file)
     click.echo(response)
 
+
 @cli.command('get')
 @click.argument('id', type=int)
 def get(id):
     response = client.get(id)
     click.echo(response)
+
 
 @cli.command('delete')
 @click.argument('id', type=int)
@@ -33,11 +37,13 @@ def delete(id):
     message = 'Deleted successfully' if response.status_code == 204 else response.json()
     click.echo(message)
 
+
 @cli.command('get-stats')
 @click.argument('id', type=int)
 def get_stats(id):
     response = client.get_stats(id)
     click.echo(response)
+
 
 @cli.command('get-excel')
 @click.argument('id', type=int)
@@ -54,6 +60,7 @@ def get_excel(id):
         click.echo(f'Successfully downloaded {file_name}')
     else:
         click.echo(response.json())
+
 
 @cli.command('get-plot')
 @click.argument('id', type=int)
