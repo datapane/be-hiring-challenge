@@ -4,6 +4,8 @@ django-picklefield==2.0
 pandas==0.25.3
 XlsxWriter==1.2.7
 matplotlib==3.1.2
+click==7.0
+requests==2.22.0
 
 # Dev specific dependencies
 pylint==2.3.0

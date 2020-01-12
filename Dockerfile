@@ -12,7 +12,7 @@ WORKDIR /dataset-server
 COPY server/api server/
 COPY server/server server/
 COPY server/manage.py server/
-COPY requirements.txt /dataset-server
+COPY server/requirements.txt /dataset-server
 
 # Install any needed packages specified in requirements.txt
 RUN pip install --trusted-host pypi.python.org -r requirements.txt

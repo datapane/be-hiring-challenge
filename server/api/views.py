@@ -35,7 +35,7 @@ class DatasetRetrieveExcelView(DatasetMixin, generics.RetrieveAPIView):
     def get(self, request, *args, **kwargs):
         instance = self.get_object()
 
-        file = instance.to_excel()
+        file = instance.get_excel()
         file_name = instance.file_name.replace('.csv', '.xls')
         content_type = 'application/ms-excel'
         response = create_http_response_with_attachment(file, content_type, file_name)
