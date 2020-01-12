@@ -58,7 +58,6 @@ out/
 
 # App
 uploads/
-migrations/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
