@@ -52,3 +52,61 @@ Please don't spend more than 2-4 hours on this - we're looking to see how you ap
 There is no right answer as such, we will mainly be looking at code quality, software architecture skills, completeness of the solution from a software engineering perspective, and clarity of thought.
 
 Once completed, please create a PR containing your work, send us an email, and book a second follow-up interview via angellist (https://angel.co/schedule/mandeep-gill-2).
+
+
+# Setup
+
+### Prerequisites
+- [python3.8](https://www.python.org/downloads/release/python-380/)
+- [docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+- [docker-compose](https://docs.docker.com/compose/install/)
+
+Make sure python3.8 is added to path or add alias
+
+    $ python --version
+    Python 3.8.0
+    
+Install virtualenv
+
+    $ pip install virtualenv
+
+Checkout source code
+
+    $ git clone https://github.com/anidok/be-hiring-challenge.git
+    
+Cd into root directory 
+
+    $ cd be-hiring-challenge/
+    
+Create and activate virtualenv
+
+    $ virtualenv venv
+    $ . venv/bin/activate
+    
+Start django server and install cli
+
+    $ make run
+    
+The above command will start the server on port 8000 and install dataset-cli. Access the cli with the following commands
+
+    $ dataset-cli get-all
+    $ dataset-cli create <path-to-csv-file>
+    $ dataset-cli get <id>
+    $ dataset-cli delete <id>
+    $ dataset-cli get-excel <id>
+    $ dataset-cli get-stats <id>
+    $ dataset-cli get-plot <id>
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
