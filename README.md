@@ -83,6 +83,11 @@ Create and activate virtualenv
     $ virtualenv venv
     $ . venv/bin/activate
     
+Install dev dependencies and check coding styles
+
+    $ pip install -r requirements-dev.txt
+    $ make check-style
+    
 Start django server and install cli
 
     $ make run
@@ -96,17 +101,3 @@ The above command will start the server on port 8000 and install dataset-cli. Ac
     $ dataset-cli get-excel <id>
     $ dataset-cli get-stats <id>
     $ dataset-cli get-plot <id>
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
