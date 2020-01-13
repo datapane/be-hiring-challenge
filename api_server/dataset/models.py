@@ -1,4 +1,3 @@
-from picklefield.fields import PickledObjectField
 from django.db import models
 
 class Dataset(models.Model):
