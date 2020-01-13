@@ -1,0 +1,11 @@
+version: 3
+
+services:
+  api_server:
+    build: .
+    container_name: dataset_api_server
+    volumes:
+      - .:/datapane
+    ports:
+      - 8000:8000
+    command: python /datapane/api_server/manage.py runserver 0.0.0.0:8000

@@ -1,7 +1,7 @@
 from django.db import models
 
 class Dataset(models.Model):
-    file_blob = models.FileField(upload_to='dataset')
+    file_blob = models.FileField(upload_to='static')
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
