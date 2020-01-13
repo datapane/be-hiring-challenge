@@ -8,4 +8,4 @@ services:
       - .:/datapane
     ports:
       - 8000:8000
-    command: python /datapane/api_server/manage.py runserver 0.0.0.0:8000
+    command: sh -c "python /datapane/api_server/manage.py migrate && python /datapane/api_server/manage.py runserver 0.0.0.0:8000"
