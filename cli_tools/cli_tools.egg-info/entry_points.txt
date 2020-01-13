@@ -1,0 +1,4 @@
+
+        [console_scripts]
+        cli-tools=cli_tools:cli
+    
