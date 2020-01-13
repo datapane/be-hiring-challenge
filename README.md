@@ -95,7 +95,7 @@ Start django server and install cli
 The above command will start the server on port 8000 and install dataset-cli. Access the cli with the following commands
 
     $ dataset-cli get-all
-    $ dataset-cli create <path-to-csv-file>
+    $ dataset-cli create --file <path-to-csv-file>
     $ dataset-cli get <id>
     $ dataset-cli delete <id>
     $ dataset-cli get-excel <id>
