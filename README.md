@@ -30,15 +30,15 @@ Prerequisites:
     
     2. POST /datasets/ = `cli-tools create --file=<filepath>`
     
-    3. GET /datasets/<id>/ = `cli-tools get --id=<dataset_id>`
+    3. GET /datasets/id/ = `cli-tools get --id=<dataset_id>`
     
-    4. DELETE /datasets/<id>/ = `cli-tools delete --id=<dataset_id>`
+    4. DELETE /datasets/id/ = `cli-tools delete --id=<dataset_id>`
     
-    5. GET /datasets/<id>/excel/ = `cli-tools excel --id=<dataset_id>`
+    5. GET /datasets/id/excel/ = `cli-tools excel --id=<dataset_id>`
     
-    6. GET /datasets/<id>/plot/ = `cli-tools plot --id=<dataset_id>`
+    6. GET /datasets/id/plot/ = `cli-tools plot --id=<dataset_id>`
     
-    7. GET /datasets/<id>/stats/ = `cli-tools stats --id=<dataset_id>`
+    7. GET /datasets/id/stats/ = `cli-tools stats --id=<dataset_id>`
 
 
 
