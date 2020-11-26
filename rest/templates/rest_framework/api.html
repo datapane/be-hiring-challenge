@@ -1,0 +1,10 @@
+{% extends "rest_framework/base.html" %}
+{% load i18n %}
+
+<title>{% block title %}{% if name %}{{ name }} – {% endif %}Datasets Rest API{% endblock %}</title>
+
+{% block branding %}
+    <a class="navbar-brand" rel="nofollow" href="/">
+        {% trans 'Datasets API' %}
+    </a>
+{% endblock %}
