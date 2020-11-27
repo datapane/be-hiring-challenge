@@ -85,3 +85,17 @@ def excel_dataset(request, pk):
         df = pd.read_csv(dataset.dataset)
 
         return HttpResponse(status=200)
+
+
+@api_view(['GET'])
+def plot_dataset(request, pk):
+    try:
+        dataset = Dataset.objects.get(pk=pk)
+
+    except ObjectDoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.method == 'GET':
+        df = pd.read_csv(dataset.dataset)
+
+        return HttpResponse(status=200)

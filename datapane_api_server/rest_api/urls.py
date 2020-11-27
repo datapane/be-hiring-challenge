@@ -20,4 +20,8 @@ urlpatterns = [
     # api
     path('datasets/', list_datasets, name='datasets'),
     path('datasets/(?P<id>[0-9]+)$',single_dataset, name= 'single_dataset'),
+    path('datasets/(?P<id>[0-9]+)/delete/',delete_dataset, name= 'delete_dataset'),
+    path('datasets/(?P<id>[0-9]+)/stats/',describe_dataset, name= 'stats_dataset'),
+    path('datasets/(?P<id>[0-9]+)/excel',excel_dataset, name= 'excel_dataset'),
+    path('datasets/(?P<id>[0-9]+)/plot',plot_dataset, name= 'plot_dataset'),
 ]
