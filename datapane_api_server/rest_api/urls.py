@@ -15,7 +15,9 @@ Including another URLconf
 """
 
 from django.urls import path
-
+from .views import *
 urlpatterns = [
-    path('', include('rest_api.urls'))
+    # api
+    path('datasets/', list_datasets, name='datasets'),
+    path('datasets/(?P<id>[0-9]+)$',single_dataset, name= 'single_dataset'),
 ]

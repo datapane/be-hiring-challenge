@@ -1,8 +1,9 @@
 import pandas as pd
-
+from datapane_api_server.rest_api.models import Dataset
+from django.core.exceptions import ObjectDoesNotExist
 # retrieve all uploaded datasets
 def list_uploaded_datasets():
-    pass
+    return Dataset.objects.all()
 
 # create new dataset with uploaded csv
 def create_dataset(dataset):
@@ -10,7 +11,11 @@ def create_dataset(dataset):
 
 # return attributes of specific dataset
 def find_dataset(id):
-    pass
+    try:
+        dataset = Dataset.objects.get(id=id)
+        return dataset
+    except ObjectDoesNotExist:
+        return None
 
 #delete specific dataset
 
