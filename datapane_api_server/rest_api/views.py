@@ -17,9 +17,11 @@ def list_datasets(request):
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        dataset_name = request.DATA.get('dataset').spit('.')[0]
 
-        data = {'dataset_name': dataset_name, 'dataset': request.user.pk}
+        dataset_name = request.DATA.get('dataset_name')
+        dataset = request.FILES.get('dataset')
+        data = {'dataset_name': dataset_name, 'dataset': dataset}
+
         serializer = DatasetSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
@@ -44,7 +46,7 @@ def single_dataset(request, pk):
         return JsonResponse(content)
 
 
-@api_view(['GET'])
+@api_view(['DELETE'])
 def delete_dataset(request, pk):
     try:
         dataset = Dataset.objects.get(pk=pk)
@@ -54,4 +56,32 @@ def delete_dataset(request, pk):
 
     if request.method == 'GET':
         dataset.delete()
+        return HttpResponse(status=200)
+
+
+@api_view(['GET'])
+def describe_dataset(request, pk):
+    try:
+        dataset = Dataset.objects.get(pk=pk)
+
+    except ObjectDoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.method == 'GET':
+        df = pd.read_csv(dataset.dataset)
+
+        return JsonResponse(df.describe())
+
+
+@api_view(['GET'])
+def excel_dataset(request, pk):
+    try:
+        dataset = Dataset.objects.get(pk=pk)
+
+    except ObjectDoesNotExist:
+        return HttpResponse(status=404)
+
+    if request.method == 'GET':
+        df = pd.read_csv(dataset.dataset)
+
         return HttpResponse(status=200)
