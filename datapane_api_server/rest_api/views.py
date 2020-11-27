@@ -7,7 +7,7 @@ from .serializers import DatasetSerializer
 from .models import Dataset
 from django.core.exceptions import ObjectDoesNotExist
 import pandas as pd
-
+from django.conf import settings
 
 @api_view(['GET','POST'])
 def list_datasets(request):
@@ -83,8 +83,15 @@ def excel_dataset(request, pk):
 
     if request.method == 'GET':
         df = pd.read_csv(dataset.dataset)
+        file_name = f'{settings.BASE_DIR}/server_files/{dataset.dataset_name}.xlsx'
+        df.to_excel(file_name,index=False,header=True)
 
-        return HttpResponse(status=200)
+        with open(file_name, "r") as excel:
+            data = excel.read()
+
+        response = HttpResponse(data,content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = f'attachment; filename={file_name}'
+        return response
 
 
 @api_view(['GET'])
@@ -97,5 +104,5 @@ def plot_dataset(request, pk):
 
     if request.method == 'GET':
         df = pd.read_csv(dataset.dataset)
-
+        numeric_column_dataset = df.select_dtypes('number')
         return HttpResponse(status=200)
