@@ -1,13 +1,18 @@
-from django.shortcuts import render
+
 from django.http import HttpResponse, JsonResponse
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+
 from .serializers import DatasetSerializer
 from .models import Dataset
 from django.core.exceptions import ObjectDoesNotExist
+
 import pandas as pd
 from django.conf import settings
+
+from matplotlib.backends.backend_pdf import PdfPages
+import matplotlib.pyplot as plt
 
 @api_view(['GET','POST'])
 def list_datasets(request):
@@ -105,4 +110,17 @@ def plot_dataset(request, pk):
     if request.method == 'GET':
         df = pd.read_csv(dataset.dataset)
         numeric_column_dataset = df.select_dtypes('number')
-        return HttpResponse(status=200)
+        file_name = f'{settings.BASE_DIR}/server_files/{dataset.dataset_name}.pdf'
+        with PdfPages(file_name) as pdf_file:
+            numeric_column_dataset.hist(bins=30, figsize=(15, 10))
+            plt.title('Dataset Histogram', fontsize=10)
+            plt.grid(True)
+            pdf_file.savefig()
+            plt.close()
+
+        with open(file_name, "r") as pdf:
+            data = pdf.read()
+
+        response = HttpResponse(data, content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename={file_name}'
+        return response
