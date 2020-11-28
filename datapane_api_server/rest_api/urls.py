@@ -14,15 +14,23 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-from django.urls import path
+from django.urls import path, include
 from .views import *
+from rest_framework import routers
+
+app_name = 'rest_api'
+router = routers.DefaultRouter()
+
+router.register('', DatasetView, basename='datasets')
+
+
 urlpatterns = [
     # api
-    path('', DatasetView, name='datasets'),
-    path('datasets/', DatasetView, name='datasets'),
+    path('', include(router.urls)),
+    path('datasets/', include(router.urls)),
     path('datasets/<int:pk>',single_dataset, name= 'single_dataset'),
-    path('datasets/<int:pk>/delete/',delete_dataset, name= 'delete_dataset'),
-    path('datasets/<int:pk>/stats/',describe_dataset, name= 'stats_dataset'),
+    path('datasets/<int:pk>/delete',delete_dataset, name= 'delete_dataset'),
+    path('datasets/<int:pk>/stats',describe_dataset, name= 'stats_dataset'),
     path('datasets/<int:pk>/excel',excel_dataset, name= 'excel_dataset'),
     path('datasets/<int:pk>/plot',plot_dataset, name= 'plot_dataset'),
 ]

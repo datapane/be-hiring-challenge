@@ -1,5 +1,5 @@
-
-from django.http import HttpResponse, JsonResponse
+from django.shortcuts import reverse
+from django.http import HttpResponse, HttpResponseRedirect
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -22,7 +22,7 @@ class DatasetView(ViewSet):
 
     serializer_class = DatasetSerializer
 
-    def list(self):
+    def list(self, request):
         datasets = Dataset.objects.all()
         serializer = DatasetSerializer(datasets, many=True)
         return Response(serializer.data)
@@ -34,33 +34,20 @@ class DatasetView(ViewSet):
 
         dataset_name = request.data.get('dataset_name')
         dataset = request.FILES.get('dataset')
+        # perform custom validation
+        if str(dataset).split('.')[1] != 'csv':
+            return Response('Wrong file type. Only CSV allowed',status=status.HTTP_400_BAD_REQUEST)
+
         data = {'dataset_name': dataset_name, 'dataset': dataset}
 
         serializer = DatasetSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data.id, status=status.HTTP_201_CREATED)
+            print(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET','POST'])
-def list_datasets(request):
-    if request.method == 'GET':
-        datasets = Dataset.objects.all()
-        serializer = DatasetSerializer(datasets, many=True)
-        return Response(serializer.data)
-
-    elif request.method == 'POST':
-        parser_class = (FileUploadParser,)
-        dataset_name = request.data.get('dataset_name')
-        dataset = request.FILES.get('dataset')
-        data = {'dataset_name': dataset_name, 'dataset': dataset}
-
-        serializer = DatasetSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data.id, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['GET'])
@@ -74,13 +61,15 @@ def single_dataset(request, pk):
     if request.method == 'GET':
 
         df = pd.read_csv(dataset.dataset)
-        content = {'file_name':dataset.dataset_name,
+        content = {
+                    'dataset':dataset.dataset_name,
+                   'file_name':dataset.filename(),
                    'size':len(df)
                    }
-        return JsonResponse(content)
+        return Response(content)
 
 
-@api_view(['DELETE'])
+@api_view(['DELETE', 'GET'])
 def delete_dataset(request, pk):
     try:
         dataset = Dataset.objects.get(pk=pk)
@@ -89,8 +78,9 @@ def delete_dataset(request, pk):
         return HttpResponse(status=404)
 
     if request.method == 'GET':
+        dataset.dataset.delete(save=True)
         dataset.delete()
-        return HttpResponse(status=200)
+        return HttpResponseRedirect(redirect_to=reverse('rest_api:datasets-list'))
 
 
 @api_view(['GET'])
@@ -104,7 +94,7 @@ def describe_dataset(request, pk):
     if request.method == 'GET':
         df = pd.read_csv(dataset.dataset)
 
-        return JsonResponse(df.describe())
+        return Response(df.describe().to_json())
 
 
 @api_view(['GET'])
