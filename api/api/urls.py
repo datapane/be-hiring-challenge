@@ -22,9 +22,8 @@ from rest_framework import permissions
 
 schema_view = get_schema_view(
    openapi.Info(
-      title="Gene Search API",
+      title="Data Ingestion API",
       default_version='v1',
-      description="Find Gene for Homo Sapiens",
       contact=openapi.Contact(email="dev@gene.com"),
       license=openapi.License(name="BSD License"),
    ),
