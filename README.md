@@ -5,6 +5,10 @@
 * Python3.8
 * Docker
 
+### Architecture
+The architecture here is django with postgres as database and redis as cache. For CLI I have chosen json as database for tracking file with the saved one.
+File is converted to feather format which very fast byte format . Feather can be uploaded to memory faster than pickle and cost less overhead.
+
 ## Installation
 
 ### API
