@@ -1,0 +1,6 @@
+
+django-rest-framework==0.1.0
+Django==2.2.3
+matplotlib==3.1.0
+openpyxl==2.5.14
+
