@@ -110,12 +110,10 @@ def excel_dataset(request, pk):
         file_name = f'{settings.BASE_DIR}/server_files/{dataset.dataset_name}.xlsx'
         df.to_excel(file_name,index=False,header=True)
 
-        with open(file_name, "r") as excel:
-            data = excel.read()
-
-        response = HttpResponse(data,content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-        response['Content-Disposition'] = f'attachment; filename={file_name}'
-        return response
+        with open(file_name, "rb") as excel:
+            response = HttpResponse(excel.read(),content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            response['Content-Disposition']= f'inline; filename={file_name.split("/")[-1]}'
+            return response
 
 
 @api_view(['GET'])
@@ -132,14 +130,12 @@ def plot_dataset(request, pk):
         file_name = f'{settings.BASE_DIR}/server_files/{dataset.dataset_name}.pdf'
         with PdfPages(file_name) as pdf_file:
             numeric_column_dataset.hist(bins=30, figsize=(15, 10))
-            plt.title('Dataset Histogram', fontsize=10)
             plt.grid(True)
             pdf_file.savefig()
             plt.close()
 
-        with open(file_name, "r") as pdf:
-            data = pdf.read()
+        with open(file_name, "rb") as pdf:
 
-        response = HttpResponse(data, content_type='application/pdf')
-        response['Content-Disposition'] = f'attachment; filename={file_name}'
-        return response
+            response = HttpResponse(pdf.read(), content_type='application/pdf')
+            response['Content-Disposition'] = f'inline; filename={file_name.split("/")[-1]}'
+            return response
