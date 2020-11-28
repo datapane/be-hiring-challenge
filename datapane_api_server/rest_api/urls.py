@@ -18,8 +18,8 @@ from django.urls import path
 from .views import *
 urlpatterns = [
     # api
-    path('', list_datasets, name='datasets'),
-    path('datasets/', list_datasets, name='datasets'),
+    path('', DatasetView, name='datasets'),
+    path('datasets/', DatasetView, name='datasets'),
     path('datasets/<int:pk>',single_dataset, name= 'single_dataset'),
     path('datasets/<int:pk>/delete/',delete_dataset, name= 'delete_dataset'),
     path('datasets/<int:pk>/stats/',describe_dataset, name= 'stats_dataset'),

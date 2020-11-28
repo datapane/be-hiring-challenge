@@ -3,7 +3,10 @@ from django.http import HttpResponse, JsonResponse
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
+from rest_framework.parsers import FileUploadParser
+from rest_framework.exceptions import ParseError
+from rest_framework.views import APIView
+from rest_framework.viewsets import ViewSet
 from .serializers import DatasetSerializer
 from .models import Dataset
 from django.core.exceptions import ObjectDoesNotExist
@@ -14,6 +17,32 @@ from django.conf import settings
 from matplotlib.backends.backend_pdf import PdfPages
 import matplotlib.pyplot as plt
 
+
+class DatasetView(ViewSet):
+
+    serializer_class = DatasetSerializer
+
+    def list(self):
+        datasets = Dataset.objects.all()
+        serializer = DatasetSerializer(datasets, many=True)
+        return Response(serializer.data)
+
+    def create(self, request):
+
+        if 'dataset' not in request.data:
+            raise ParseError("Empty content")
+
+        dataset_name = request.data.get('dataset_name')
+        dataset = request.FILES.get('dataset')
+        data = {'dataset_name': dataset_name, 'dataset': dataset}
+
+        serializer = DatasetSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data.id, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 @api_view(['GET','POST'])
 def list_datasets(request):
     if request.method == 'GET':
@@ -22,8 +51,8 @@ def list_datasets(request):
         return Response(serializer.data)
 
     elif request.method == 'POST':
-
-        dataset_name = request.DATA.get('dataset_name')
+        parser_class = (FileUploadParser,)
+        dataset_name = request.data.get('dataset_name')
         dataset = request.FILES.get('dataset')
         data = {'dataset_name': dataset_name, 'dataset': dataset}
 
