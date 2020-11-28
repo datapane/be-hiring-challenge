@@ -5,6 +5,7 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument('-ds', '--datasets', help="list datasets")
 parser.add_argument('-id', '--id', help="unique identifier for a dataset", required=True)
+parser.add_argument('-upload', '--upload', help="Upload provided dataset", action='store_true')
 parser.add_argument('-path', '--file path', help="where the dataset is located in your system")
 parser.add_argument('-find', '--single_dataset', help="show size of single dataset", action='store_true')
 parser.add_argument('-delete', '--delete', help="delete single dataset", action='store_true')
@@ -21,6 +22,9 @@ if args.datasets:
 
 if args.single_datset:
     print(single_dataset(args.id))
+
+if args.upload and args.path is not "" and args.path is not None:
+    print(upload_dataset(args.path))
 
 if args.delete:
     print(delete_dataset(args.id))
