@@ -1,6 +1,6 @@
 import pandas as pd
 import glob as gb
-import os
+import os, shutil
 
 from matplotlib.backends.backend_pdf import PdfPages
 import matplotlib.pyplot as plt
@@ -8,6 +8,14 @@ import matplotlib.pyplot as plt
 data_store_folder = 'data_store'
 output_folder = 'output'
 files = gb.glob(f'{data_store_folder}/*.csv')
+
+def upload_dataset(path):
+    source = path
+    destination = data_store_folder
+    shutil.copy(source, destination)
+    file_name = path.split('/')[-1]
+    return f'File succesfully uploaded to {destination}/{file_name}'
+
 
 def list_datasets():
     return files
