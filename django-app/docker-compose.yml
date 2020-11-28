@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3"
 
 services:
   db:
@@ -10,14 +10,14 @@ services:
 # this service will use same image, and once the migration is done it will be stopped
   migrations:
     build: .
-    command: /wait-for-it.sh db:5432 -- python django-app/manage.py migrate
+    command: /wait-for-it.sh db:5432 -- python manage.py migrate
     volumes:
       - ./wait-for-it.sh:/wait-for-it.sh
     depends_on:
       - db
   web:
     build: .
-    command: /wait-for-it.sh db:5432 -- python django-app/manage.py runserver 0.0.0.0:8000
+    command: /wait-for-it.sh db:5432 -- python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./wait-for-it.sh:/wait-for-it.sh
       - .:/code
