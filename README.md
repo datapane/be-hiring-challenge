@@ -26,7 +26,7 @@ To install:
 ### Instructions
 
 #### API
-You can use swagger at localhost:8000/swagger or redoc at localhost:8000/redoc to check apis
+You can use swagger at [swagger](localhost:8000/swagger) or redoc at [redoc](localhost:8000/redoc) to check apis
 
 ### CLI
 Helpers here 
