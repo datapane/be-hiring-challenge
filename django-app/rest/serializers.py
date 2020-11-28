@@ -1,3 +1,4 @@
+from django.core.validators import FileExtensionValidator
 from rest_framework import serializers
 
 from .models import DatasetModel
@@ -7,7 +8,8 @@ class DatasetSerializer(serializers.ModelSerializer):
     """
     Serializes for List and Create methods
     """
-    csv = serializers.FileField(write_only=True)
+    csv = serializers.FileField(write_only=True,
+                                validators=[FileExtensionValidator(['csv'])])
     name = serializers.CharField(read_only=True)
     uri = serializers.HyperlinkedIdentityField(
         view_name='retrieve_dataset',
