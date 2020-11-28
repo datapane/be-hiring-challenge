@@ -1,20 +1,51 @@
 import pandas as pd
+import glob as gb
+import os
 
+from matplotlib.backends.backend_pdf import PdfPages
+import matplotlib.pyplot as plt
+
+data_store_folder = 'data_store'
+output_folder = 'output'
+files = gb.glob(f'{data_store_folder}/*.csv')
 
 def list_datasets():
-    pass
+    return files
 
 def single_dataset(id):
-    pass
+    dataset = files[id]
+    df = pd.read_csv(dataset)
+    content = {'file_name': dataset.split('.')[0],
+               'size': len(df)
+               }
+    return content
 
 def delete_dataset(id):
-    pass
+    dataset = files[id]
+    os.remove(f'{data_store_folder}/{dataset}')
+    return f'{dataset} successfully removed'
 
 def describe_dataset(id):
-    pass
+    dataset = files[id]
+    df = pd.read_csv(dataset)
+    return df.describe()
 
 def export_to_excel(id):
-    pass
+    dataset = files[id]
+    df = pd.read_csv(dataset)
+    file_name = f'{output_folder}/{dataset.split(".")[0]}.xlsx'
+    df.to_excel(file_name, index=False, header=True)
+    return f'Export to excel successful. Find you file at the location {file_name}'
 
 def export_to_pdf(id):
-    pass
+    dataset = files[id]
+    df = pd.read_csv(dataset)
+    numeric_column_dataset = df.select_dtypes('number')
+    file_name = f'{output_folder}/{dataset.split(".")[0]}.pdf'
+    with PdfPages(file_name) as pdf_file:
+        numeric_column_dataset.hist(bins=30, figsize=(15, 10))
+        plt.title('Dataset Histogram', fontsize=10)
+        plt.grid(True)
+        pdf_file.savefig()
+        plt.close()
+    return f'Export to PDF successful. Find you file at the location {file_name}'
