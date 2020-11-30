@@ -59,13 +59,15 @@ class DatasetView(ViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def destroy(self, request, *args, **kwargs):
+    def destroy(self, request, pk=None):
         try:
-            instance = self.get_object()
-            self.perform_destroy(instance)
+            queryset = Dataset.objects.all()
+            dataset = get_object_or_404(queryset, pk=pk)
+            dataset.delete()
         except Http404:
             pass
-        return HttpResponseRedirect(redirect_to=reverse('rest_api:datasets-list'))
+        return HttpResponseRedirect(redirect_to=reverse('rest_api:datasets'))
+
 
     @action(detail=True)
     def describe_dataset(self, request, pk):

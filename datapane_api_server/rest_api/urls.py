@@ -28,9 +28,5 @@ urlpatterns = [
     # api
     path('', include(router.urls)),
     path('datasets/', include(router.urls)),
-    path('datasets/<int:pk>',single_dataset, name= 'single_dataset'),
-    path('datasets/<int:pk>/delete',delete_dataset, name= 'delete_dataset'),
-    path('datasets/<int:pk>/stats',describe_dataset, name= 'stats_dataset'),
-    path('datasets/<int:pk>/excel',excel_dataset, name= 'excel_dataset'),
-    path('datasets/<int:pk>/plot',plot_dataset, name= 'plot_dataset'),
+
 ]
