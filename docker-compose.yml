@@ -1,0 +1,11 @@
+version: '2.4'
+services:
+   
+  article:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+
+    volumes:
+      - ./:/app/
+    ports:
+      - 8001:8000
