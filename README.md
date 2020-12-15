@@ -1,4 +1,4 @@
-### Installation
+# Installation
 Requirements :- Docker , Docker-Compose
 
 ```sh
@@ -6,16 +6,27 @@ $ sudo docker-compose up -d
 
 ```
 # Migrations
-login into docker container   
-python3.6 manage.py migrate    
-performs migrations for auth and contenttypes contrib apps   
+## login into docker container
+ ```sh
+ $ sudo docker exec -it container_id /bin/bash
+ 
+ ```
 
-python3.6 manage.py migrate --run-syncdb   
-creates the rest of the database   
+## performs migrations for auth and contenttypes contrib apps   
+```python 
+$ python3.6 manage.py migrate 
+
+```
+
+## creates the rest of the database   
+```python
+$ python3.6 manage.py migrate --run-syncdb  
+
+```
 
 The App will start listening on localhost at port 8000
 
-# installing Cli
+# Installing CLI
 
 ```sh
 $ cd datapane_cli
