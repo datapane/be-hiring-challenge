@@ -11,7 +11,7 @@ This challenge involves building a small API server and corresponding command-li
 
 For this task we'll be building a very simple Python 3-based REST API server and command-line client. 
 
-You may use any Python libraries and technologies of your choice, for instance Django, Flask, Starlette, etc, to build the API server (internally we use Django/DRF so recommend that).
+You may use any Python libraries and technologies of your choice, for instance Django, Flask, FastAPI, etc, to build the API server (internally we use Django/DRF so recommend that).
 
 ## API Server
 
