@@ -1,0 +1,26 @@
+## python ##
+## byte compiled ##
+
+__pycache__/
+build/
+lib/
+lib64/
+*$py.class
+
+## csv,pdf, xlsx ##
+*.csv
+*.pdf
+*.xlsx
+
+# env files
+.env
+.env.*
+
+## virtual envs
+
+.venv/
+
+# static
+.css
+.js
+.html

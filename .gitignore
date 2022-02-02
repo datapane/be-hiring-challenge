@@ -1,0 +1,7 @@
+.cache
+src/.temp
+dist
+.env
+.env.*
+static/*
+.venv/
