@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "dataset"
+version = "0.1.0"
+description = ""
+authors = ["Ishan Masdekar <imasdekar@disroot.org>"]
+readme = "README.md"
+[tool.poetry.dependencies]
+python = "^3.8"
+Django = "^4.0.1"
+djangorestframework = "^3.13.1"
+pandas = "^1.4.0"
+pyarrow = "^6.0.1"
+openpyxl = "^3.0.9"
+matplotlib = "^3.5.1"
+gunicorn = "^20.1.0"
+
+[tool.poetry.dev-dependencies]
+black = "^22.1.0"
+isort = "^5.10.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

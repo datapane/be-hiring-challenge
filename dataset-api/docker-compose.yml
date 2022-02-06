@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    entrypoint: /docker-entrypoint.sh
+    expose:
+      - 8000
+    volumes:
+      - .:/code
+      - static_volume:/code/dataset/static
+  nginx:
+      build: ./nginx
+      volumes:
+        - static_volume:/code/dataset/static
+      ports:
+        - 8000:80
+      depends_on:
+        - web
+volumes:
+  static_volume:

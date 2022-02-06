@@ -1,0 +1,25 @@
+## python ##
+## byte compiled ##
+
+__pycache__/
+build/
+lib/
+lib64/
+*$py.class
+
+## db ##
+*.db
+*.sqlite3
+
+## csv,pdf, xlsx ##
+*.csv
+*.pdf
+*.xlsx
+
+## virtual envs
+.venv/
+
+# static
+.css
+.js
+.html

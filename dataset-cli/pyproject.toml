@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "dataset-cli"
+version = "0.1.0"
+description = ""
+authors = ["Ishan Masdekar <imasdekar@disroot.org>"]
+readme= "README.md"
+
+[tool.poetry.scripts]
+dataset-cli = "dataset_cli.main:app"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+typer = "^0.4.0"
+requests = "^2.27.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+black = "^22.1.0"
+isort = "^5.10.1"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
